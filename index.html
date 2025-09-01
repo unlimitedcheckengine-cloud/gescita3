@@ -477,14 +477,16 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="fuente" class="form-label">Fuente de la Cita</label>
-                                        <select class="form-select" id="fuente">
-                                            <option value="otro" selected>Otro</option>
-                                            <option value="whatsapp">WhatsApp</option>
-                                            <option value="llamada">Llamada</option>
-                                            <option value="tiktok">TikTok</option>
-                                            <option value="instagram">Instagram</option>
-                                            <option value="referido">Referido</option>
-                                        </select>
+                                        <div class="input-group">
+                                            <select class="form-select" id="fuente" required>
+                                                <option value="">Seleccione una fuente...</option>
+                                                <!-- Fuentes se cargarán aquí -->
+                                            </select>
+                                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#gestionFuentesModal" title="Gestionar Fuentes"><i class="fas fa-cog"></i></button>
+                                        </div>
+                                        <div id="otroFuenteContainer" class="mt-2" style="display: none;">
+                                            <input type="text" class="form-control" id="otroFuente" placeholder="Especifique la nueva fuente...">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1331,14 +1333,16 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="editarFuente" class="form-label">Fuente de la Cita</label>
-                                    <select class="form-select" id="editarFuente">
-                                        <option value="otro">Otro</option>
-                                        <option value="whatsapp">WhatsApp</option>
-                                        <option value="llamada">Llamada</option>
-                                        <option value="tiktok">TikTok</option>
-                                        <option value="instagram">Instagram</option>
-                                        <option value="referido">Referido</option>
-                                    </select>
+                                    <div class="input-group">
+                                        <select class="form-select" id="editarFuente">
+                                            <option value="">Seleccione una fuente...</option>
+                                            <!-- Fuentes se cargarán aquí -->
+                                        </select>
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#gestionFuentesModal" title="Gestionar Fuentes"><i class="fas fa-cog"></i></button>
+                                    </div>
+                                    <div id="editarOtroFuenteContainer" class="mt-2" style="display: none;">
+                                        <input type="text" class="form-control" id="editarOtroFuente" placeholder="Especifique la nueva fuente...">
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="editarNotas" class="form-label">Notas Adicionales</label><textarea class="form-control" id="editarNotas" rows="4"></textarea>
@@ -1459,6 +1463,7 @@
                                 <button class="nav-link" id="v-pills-mecanicos-tab" data-bs-toggle="pill" data-bs-target="#v-pills-mecanicos" type="button" role="tab"><i class="fas fa-user-cog me-2"></i>Mecánicos</button>
                                 <button class="nav-link" id="v-pills-plantillas-tab" data-bs-toggle="pill" data-bs-target="#v-pills-plantillas" type="button" role="tab"><i class="fab fa-whatsapp me-2"></i>Plantillas</button>
                                 <button class="nav-link" id="v-pills-servicios-tab" data-bs-toggle="pill" data-bs-target="#v-pills-servicios" type="button" role="tab"><i class="fas fa-concierge-bell me-2"></i>Servicios</button>
+                                <button class="nav-link" id="v-pills-fuentes-tab" data-bs-toggle="pill" data-bs-target="#v-pills-fuentes" type="button" role="tab"><i class="fas fa-share-alt me-2"></i>Fuentes</button>
                                 <button class="nav-link" id="v-pills-datos-tab" data-bs-toggle="pill" data-bs-target="#v-pills-datos" type="button" role="tab"><i class="fas fa-database me-2"></i>Datos</button>
                             </div>
                         </div>
@@ -1543,6 +1548,14 @@
                                         <h5 class="mb-3"><i class="fas fa-concierge-bell me-2"></i>Gestión de Servicios</h5>
                                         <p class="text-muted">Define los servicios que ofreces para estandarizar y agilizar la creación de citas.</p>
                                         <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#gestionServiciosModal"><i class="fas fa-concierge-bell me-2"></i>Administrar Servicios</button>
+                                    </div>
+                                </div>
+                                <!-- Pestaña Fuentes -->
+                                <div class="tab-pane fade" id="v-pills-fuentes" role="tabpanel">
+                                    <div class="config-section">
+                                        <h5 class="mb-3"><i class="fas fa-share-alt me-2"></i>Gestión de Fuentes de Cita</h5>
+                                        <p class="text-muted">Define las fuentes desde donde provienen tus clientes (ej. WhatsApp, Instagram, Referido).</p>
+                                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#gestionFuentesModal"><i class="fas fa-share-alt me-2"></i>Administrar Fuentes</button>
                                     </div>
                                 </div>
                                 <!-- Pestaña Plantillas -->
@@ -1851,6 +1864,42 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end align-items-center mt-3"><button type="submit" class="btn btn-primary" id="btnGuardarServicio"><i class="fas fa-plus me-1"></i> Crear Servicio</button></div>
+                    </form>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Gestión de Fuentes de Cita -->
+    <div class="modal fade" id="gestionFuentesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-share-alt me-2"></i>Gestión de Fuentes de Cita</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="config-section">
+                        <div class="content-subtitle">
+                            <h5 class="mb-0">Lista de Fuentes</h5>
+                        </div>
+                        <p class="text-muted">Haz clic en una fuente para editarla o completa el formulario para añadir una nueva.</p>
+                        <div class="table-responsive" style="max-height: 250px;">
+                            <table class="table table-hover">
+                                <thead><tr><th>Nombre de la Fuente</th><th>Acciones</th></tr></thead>
+                                <tbody id="tablaFuentes"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
+                    <form id="fuenteForm" class="config-section">
+                        <div class="content-subtitle">
+                            <h5 class="mb-0" id="fuenteFormTitulo">Crear Nueva Fuente</h5>
+                        </div>
+                        <input type="hidden" id="fuenteId">
+                        <div class="mb-3"><label for="fuenteNombre" class="form-label">Nombre de la Fuente*</label><input type="text" class="form-control" id="fuenteNombre" required></div>
+                        <div class="d-flex justify-content-end align-items-center mt-3"><button type="submit" class="btn btn-primary" id="btnGuardarFuente"><i class="fas fa-plus me-1"></i> Crear Fuente</button></div>
                     </form>
                 </div>
                 <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></div>
